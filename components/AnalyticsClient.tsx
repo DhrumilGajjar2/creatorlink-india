@@ -1,4 +1,5 @@
 // components/AnalyticsClient.tsx
+// Apple & Nike Tier Analytics UI
 "use client";
 import {
   BarChart,
@@ -23,18 +24,11 @@ interface Props {
   analytics: AnalyticsRow[];
 }
 
-const NETWORK_COLORS: Record<string, string> = {
-  amazon: "#f97316",
-  flipkart: "#3b82f6",
-  myntra: "#ec4899",
-  other: "#8b5cf6",
-};
-
 const NETWORK_META: Record<string, { label: string; emoji: string; bg: string; text: string }> = {
-  amazon: { label: "Amazon", emoji: "🛒", bg: "bg-orange-50", text: "text-orange-700" },
+  amazon:   { label: "Amazon", emoji: "🛒", bg: "bg-orange-50", text: "text-orange-700" },
   flipkart: { label: "Flipkart", emoji: "🛍️", bg: "bg-blue-50", text: "text-blue-700" },
-  myntra: { label: "Myntra", emoji: "👗", bg: "bg-pink-50", text: "text-pink-700" },
-  other: { label: "Other", emoji: "🔗", bg: "bg-purple-50", text: "text-purple-700" },
+  myntra:   { label: "Myntra", emoji: "👗", bg: "bg-pink-50", text: "text-pink-700" },
+  other:    { label: "Store", emoji: "🔗", bg: "bg-neutral-100", text: "text-neutral-700" },
 };
 
 function formatDate(iso: string | null) {
@@ -62,72 +56,94 @@ export function AnalyticsClient({ analytics }: Props) {
 
   if (analytics.length === 0) {
     return (
-      <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-200 max-w-2xl">
-        <div className="text-6xl mb-4">📊</div>
-        <h3 className="text-base font-semibold text-gray-900 mb-1">No data yet</h3>
-        <p className="text-sm text-gray-500 max-w-xs mx-auto">
-          Add some links and share your page to start seeing click analytics here.
+      <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-neutral-300 max-w-2xl p-8">
+        <div className="text-5xl mb-3">📊</div>
+        <h2 className="text-base font-bold text-neutral-900 mb-1">No clicks recorded yet</h2>
+        <p className="text-xs text-neutral-500 max-w-xs mx-auto leading-relaxed">
+          Share your bio link on Instagram, YouTube, or WhatsApp to start tracking click attribution.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6 max-w-3xl">
+    <div className="space-y-7 max-w-3xl">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Track which links your audience loves most.</p>
+        <h1 className="text-2xl font-bold tracking-tight text-neutral-950">
+          Audience Insights
+        </h1>
+        <p className="text-xs text-neutral-500 mt-1">
+          Monitor product engagement, click volume, and top-converting recommendations.
+        </p>
       </div>
 
-      {/* Summary cards */}
-      <div className="grid grid-cols-3 gap-3">
-        <StatCard
-          label="Total Links"
-          value={analytics.length.toLocaleString("en-IN")}
-          icon="🔗"
-          color="indigo"
-        />
-        <StatCard
-          label="Total Clicks"
-          value={totalClicks.toLocaleString("en-IN")}
-          icon="👆"
-          color="green"
-        />
-        <StatCard
-          label="Top Link"
-          value={topLink ? topLink.clicks.toLocaleString("en-IN") + " clicks" : "—"}
-          icon="🏆"
-          color="orange"
-          sub={topLink ? truncate(topLink.title, 28) : ""}
-        />
-      </div>
-
-      {/* Bar Chart */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-        <div className="flex items-center justify-between mb-5">
-          <h2 className="text-base font-semibold text-gray-900">Clicks per Link</h2>
-          <span className="text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded-lg">Top {Math.min(sorted.length, 8)}</span>
+      {/* High-Impact Stat Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+        <div className="bg-white rounded-2xl border border-black/[0.06] p-5 shadow-2xs">
+          <p className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider">
+            Total Links
+          </p>
+          <p className="text-3xl font-bold text-neutral-950 mt-1 tracking-tight">
+            {analytics.length.toLocaleString("en-IN")}
+          </p>
+          <p className="text-[11px] text-neutral-500 mt-1">Active storefront items</p>
         </div>
-        {totalClicks === 0 ? (
-          <div className="flex items-center justify-center h-40 text-gray-400 text-sm">
-            Share your page to start getting clicks!
+
+        <div className="bg-white rounded-2xl border border-black/[0.06] p-5 shadow-2xs">
+          <p className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider">
+            Total Clicks
+          </p>
+          <p className="text-3xl font-bold text-neutral-950 mt-1 tracking-tight">
+            {totalClicks.toLocaleString("en-IN")}
+          </p>
+          <p className="text-[11px] text-emerald-600 font-medium mt-1">All-time redirects</p>
+        </div>
+
+        <div className="bg-white rounded-2xl border border-black/[0.06] p-5 shadow-2xs">
+          <p className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider">
+            Top Performing Link
+          </p>
+          <p className="text-2xl font-bold text-neutral-950 mt-1 tracking-tight truncate">
+            {topLink ? `${topLink.clicks.toLocaleString("en-IN")} clicks` : "—"}
+          </p>
+          {topLink && (
+            <p className="text-[11px] text-neutral-500 mt-1 truncate font-medium">
+              {topLink.title}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Refined Recharts Bar Chart */}
+      <div className="bg-white rounded-2xl border border-black/[0.06] shadow-2xs p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-sm font-bold text-neutral-900">
+              Clicks per Recommendation
+            </h2>
+            <p className="text-xs text-neutral-400 mt-0.5">Top 8 items by volume</p>
           </div>
-        ) : (
-          <ResponsiveContainer width="100%" height={240}>
+          <span className="text-xs text-neutral-500 bg-neutral-100 px-2.5 py-1 rounded-full font-medium">
+            Live
+          </span>
+        </div>
+
+        <div className="h-60 w-full">
+          <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={sorted.slice(0, 8)}
-              margin={{ top: 0, right: 0, left: -24, bottom: 0 }}
+              margin={{ top: 10, right: 10, left: -24, bottom: 0 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#f4f4f5" vertical={false} />
               <XAxis
                 dataKey="title"
-                tick={{ fontSize: 10, fill: "#9ca3af" }}
+                tick={{ fontSize: 10, fill: "#71717a" }}
                 tickFormatter={(v: string) => truncate(v, 12)}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fontSize: 10, fill: "#9ca3af" }}
+                tick={{ fontSize: 10, fill: "#71717a" }}
                 allowDecimals={false}
                 axisLine={false}
                 tickLine={false}
@@ -136,73 +152,78 @@ export function AnalyticsClient({ analytics }: Props) {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 formatter={(value: any) => [value, "Clicks"]}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                labelFormatter={(label: any) => truncate(String(label), 40)}
+                labelFormatter={(label: any) => String(label)}
                 contentStyle={{
-                  borderRadius: "12px",
-                  border: "1px solid #e5e7eb",
+                  borderRadius: "14px",
+                  border: "1px solid rgba(0, 0, 0, 0.08)",
+                  boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
                   fontSize: "12px",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                  background: "rgba(255, 255, 255, 0.95)",
+                  backdropFilter: "blur(12px)",
                 }}
-                cursor={{ fill: "rgba(99,102,241,0.05)", radius: 8 }}
+                cursor={{ fill: "rgba(0, 0, 0, 0.03)", radius: 8 }}
               />
-              <Bar dataKey="clicks" radius={[8, 8, 0, 0]} maxBarSize={56}>
-                {sorted.slice(0, 8).map((row, i) => (
+              <Bar dataKey="clicks" radius={[6, 6, 0, 0]} maxBarSize={48}>
+                {sorted.slice(0, 8).map((_, i) => (
                   <Cell
-                    key={row.id}
-                    fill={NETWORK_COLORS[row.network] ?? "#6366f1"}
-                    fillOpacity={i === 0 ? 1 : 0.65}
+                    key={i}
+                    fill={i === 0 ? "#111111" : "#4338ca"}
+                    fillOpacity={i === 0 ? 0.95 : 0.75 - i * 0.07}
                   />
                 ))}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-        )}
+        </div>
       </div>
 
-      {/* Table */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-50 flex items-center justify-between">
-          <h2 className="text-base font-semibold text-gray-900">Link Performance</h2>
-          <span className="text-xs text-gray-400">{analytics.length} links</span>
+      {/* Link Performance Table */}
+      <div className="bg-white rounded-2xl border border-black/[0.06] shadow-2xs overflow-hidden">
+        <div className="px-6 py-4 border-b border-neutral-100 flex items-center justify-between">
+          <h2 className="text-sm font-bold text-neutral-900">
+            Performance Breakdown
+          </h2>
+          <span className="text-xs text-neutral-400">{analytics.length} total items</span>
         </div>
-        <div className="divide-y divide-gray-50">
+
+        <div className="divide-y divide-neutral-100 text-xs">
           {sorted.map((row, i) => {
             const meta = NETWORK_META[row.network] ?? NETWORK_META.other;
             return (
-              <div key={row.id} className="flex items-center gap-4 px-6 py-4 hover:bg-gray-50/50 transition-colors">
-                {/* Rank */}
-                <div className="w-6 text-center text-sm font-bold text-gray-300 flex-shrink-0">
-                  {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : i + 1}
+              <div
+                key={row.id}
+                className="flex items-center gap-4 px-6 py-3.5 hover:bg-neutral-50/60 transition-colors"
+              >
+                <div className="w-5 text-center font-bold text-neutral-400 flex-shrink-0">
+                  {i + 1}
                 </div>
 
-                {/* Network badge */}
-                <span className={`flex-shrink-0 px-2 py-0.5 rounded-full text-xs font-semibold ${meta.bg} ${meta.text}`}>
+                <span className={`flex-shrink-0 px-2 py-0.5 rounded-md font-semibold text-[10px] ${meta.bg} ${meta.text}`}>
                   {meta.emoji} {meta.label}
                 </span>
 
-                {/* Title */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">{row.title}</p>
+                  <p className="font-medium text-neutral-900 truncate">
+                    {row.title}
+                  </p>
                 </div>
 
-                {/* Clicks bar + number */}
+                {/* Progress bar */}
                 <div className="hidden sm:flex items-center gap-3 flex-shrink-0">
-                  <div className="w-24 bg-gray-100 rounded-full h-1.5 overflow-hidden">
+                  <div className="w-24 bg-neutral-100 rounded-full h-1.5 overflow-hidden">
                     <div
-                      className="h-full rounded-full"
+                      className="h-full rounded-full bg-neutral-900"
                       style={{
                         width: totalClicks > 0 ? `${(row.clicks / sorted[0].clicks) * 100}%` : "0%",
-                        backgroundColor: NETWORK_COLORS[row.network] ?? "#6366f1",
                       }}
                     />
                   </div>
-                  <span className="text-sm font-bold text-gray-900 w-10 text-right">
+                  <span className="font-bold text-neutral-900 w-12 text-right">
                     {row.clicks.toLocaleString("en-IN")}
                   </span>
                 </div>
 
-                {/* Last clicked */}
-                <span className="hidden md:block text-xs text-gray-400 flex-shrink-0 w-20 text-right">
+                <span className="hidden md:block text-neutral-400 flex-shrink-0 w-20 text-right">
                   {formatDate(row.lastClicked)}
                 </span>
               </div>
@@ -210,36 +231,6 @@ export function AnalyticsClient({ analytics }: Props) {
           })}
         </div>
       </div>
-    </div>
-  );
-}
-
-function StatCard({
-  label,
-  value,
-  icon,
-  sub,
-  color,
-}: {
-  label: string;
-  value: string;
-  icon: string;
-  sub?: string;
-  color: "indigo" | "green" | "orange";
-}) {
-  const colorMap = {
-    indigo: "bg-indigo-50 text-indigo-600 border-indigo-100",
-    green: "bg-green-50 text-green-600 border-green-100",
-    orange: "bg-orange-50 text-orange-600 border-orange-100",
-  };
-  return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-      <div className={`inline-flex items-center justify-center w-9 h-9 rounded-xl text-lg mb-3 ${colorMap[color]}`}>
-        {icon}
-      </div>
-      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">{label}</p>
-      <p className="text-xl font-bold text-gray-900 mt-0.5 leading-tight">{value}</p>
-      {sub && <p className="text-xs text-gray-400 mt-1 truncate">{sub}</p>}
     </div>
   );
 }

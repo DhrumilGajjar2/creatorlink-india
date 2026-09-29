@@ -1,6 +1,8 @@
 // components/ProductsManager.tsx
+// Apple & Nike Tier Products Management UI
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import type { Product, DeliveryType } from "@/lib/db/types";
 
 interface Props {
@@ -17,7 +19,7 @@ export function ProductsManager({ initialProducts, creatorHandle }: Props) {
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.title || !form.price) return;
+    if (!form.title.trim() || !form.price) return;
     setError("");
     setSaving(true);
 
@@ -26,7 +28,7 @@ export function ProductsManager({ initialProducts, creatorHandle }: Props) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title: form.title,
+          title: form.title.trim(),
           price: Number(form.price),
           deliveryType: form.deliveryType,
         }),
@@ -40,116 +42,141 @@ export function ProductsManager({ initialProducts, creatorHandle }: Props) {
       setForm({ title: "", price: "", deliveryType: "file" });
       setShowForm(false);
     } catch {
-      setError("Network error — please try again.");
+      setError("Network error. Please try again.");
     } finally {
       setSaving(false);
     }
   }
 
   return (
-    <div className="space-y-6 max-w-2xl">
+    <div className="space-y-7 max-w-3xl">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Products</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Sell digital products and accept INR payments via Razorpay.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-neutral-950">
+            Digital Store
+          </h1>
+          <p className="text-xs text-neutral-500 mt-1">
+            Sell digital downloads and bookings directly to your audience via Razorpay.
+          </p>
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 active:scale-95 transition-all text-sm shadow-sm shadow-indigo-200"
+          className="btn-primary py-2.5 px-5 text-xs sm:text-sm font-semibold self-start sm:self-auto"
         >
-          <span>➕</span> Create Product
+          <span>{showForm ? "✕ Close Form" : "+ Create Product"}</span>
         </button>
       </div>
 
-      {/* Create form */}
+      {/* Create Product Form */}
       {showForm && (
-        <div className="bg-white rounded-2xl border border-indigo-100 shadow-lg shadow-indigo-50 p-6 space-y-5 animate-fade-in-up">
-          <div className="flex items-center gap-2">
-            <span className="w-8 h-8 bg-indigo-100 rounded-xl flex items-center justify-center text-base">🛒</span>
-            <h2 className="text-base font-semibold text-gray-900">New Product</h2>
+        <div className="bg-white rounded-2xl border border-black/[0.06] p-6 shadow-xs animate-fade-in-up space-y-5">
+          <div className="flex items-center gap-2.5 pb-3 border-b border-neutral-100">
+            <span className="w-8 h-8 rounded-xl bg-neutral-100 flex items-center justify-center text-sm">
+              ✨
+            </span>
+            <h2 className="text-sm font-bold text-neutral-900">
+              New Digital Offering
+            </h2>
           </div>
 
           <form onSubmit={handleCreate} className="space-y-4">
             {error && (
-              <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm">
-                <span>⚠️</span> {error}
+              <div role="alert" className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl text-xs flex items-center gap-2">
+                <span>⚠️</span>
+                <span>{error}</span>
               </div>
             )}
 
-            {/* Delivery type picker — first */}
+            {/* Segmented Delivery Type Control */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">What are you selling?</label>
-              <div className="grid grid-cols-2 gap-3">
-                {([
-                  { type: "file", icon: "📄", title: "Digital File", desc: "Presets, templates, PDFs, courses" },
-                  { type: "booking", icon: "📅", title: "Session / Booking", desc: "1:1 calls, consultations, coaching" },
-                ] as { type: DeliveryType; icon: string; title: string; desc: string }[]).map(({ type, icon, title, desc }) => (
-                  <button
-                    key={type}
-                    type="button"
-                    onClick={() => setForm({ ...form, deliveryType: type })}
-                    className={`p-4 rounded-xl border-2 text-left transition-all ${
-                      form.deliveryType === type
-                        ? "border-indigo-500 bg-indigo-50"
-                        : "border-gray-200 hover:border-gray-300 bg-white"
-                    }`}
-                  >
-                    <div className="text-2xl mb-2">{icon}</div>
-                    <div className={`text-sm font-semibold mb-0.5 ${form.deliveryType === type ? "text-indigo-700" : "text-gray-900"}`}>
-                      {title}
-                    </div>
-                    <div className="text-xs text-gray-500">{desc}</div>
-                  </button>
-                ))}
+              <label className="block text-xs font-semibold text-neutral-700 mb-2">
+                Product Type
+              </label>
+              <div className="grid grid-cols-2 gap-2.5">
+                {[
+                  { type: "file" as DeliveryType, icon: "📄", title: "Digital File", desc: "Templates, Presets, PDFs, Guides" },
+                  { type: "booking" as DeliveryType, icon: "📅", title: "1:1 Consultation", desc: "Calls, Mentorship, Strategy" },
+                ].map(({ type, icon, title, desc }) => {
+                  const selected = form.deliveryType === type;
+                  return (
+                    <button
+                      key={type}
+                      type="button"
+                      onClick={() => setForm({ ...form, deliveryType: type })}
+                      className={`
+                        p-3.5 rounded-xl border text-left transition-all
+                        ${
+                          selected
+                            ? "bg-white border-neutral-900 ring-2 ring-neutral-900/10 shadow-xs"
+                            : "bg-[#f5f5f7] border-neutral-200/80 hover:border-neutral-300"
+                        }
+                      `}
+                    >
+                      <div className="text-xl mb-1">{icon}</div>
+                      <div className="text-xs font-bold text-neutral-900">{title}</div>
+                      <div className="text-[11px] text-neutral-500 mt-0.5">{desc}</div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
+            {/* Product Title */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Product Name</label>
+              <label className="block text-xs font-semibold text-neutral-700 mb-1.5" htmlFor="prod-title">
+                Product Title
+              </label>
               <input
+                id="prod-title"
                 type="text"
                 required
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
-                placeholder={form.deliveryType === "file" ? "e.g. Lightroom Presets Bundle" : "e.g. 1:1 Instagram Growth Call"}
-                className="w-full px-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm bg-gray-50 focus:bg-white"
+                placeholder={form.deliveryType === "file" ? "e.g. Creator Growth Notion Template 2026" : "e.g. 1:1 Content Strategy Consultation"}
+                className="input-field text-sm"
               />
             </div>
 
+            {/* Price in INR */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Price (₹)</label>
+              <label className="block text-xs font-semibold text-neutral-700 mb-1.5" htmlFor="prod-price">
+                Price (INR)
+              </label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold text-sm">₹</span>
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400 font-semibold text-sm">
+                  ₹
+                </span>
                 <input
+                  id="prod-price"
                   type="number"
                   required
                   min={1}
                   value={form.price}
                   onChange={(e) => setForm({ ...form, price: e.target.value })}
                   placeholder="499"
-                  className="w-full pl-8 pr-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm bg-gray-50 focus:bg-white"
+                  className="input-field text-sm pl-8"
                 />
               </div>
               {form.price && !isNaN(Number(form.price)) && (
-                <p className="text-xs text-gray-400 mt-1">
-                  Buyers pay ₹{Number(form.price).toLocaleString("en-IN")} via Razorpay (test mode)
+                <p className="text-[11px] text-neutral-500 mt-1">
+                  Buyers will pay ₹{Number(form.price).toLocaleString("en-IN")} via Razorpay.
                 </p>
               )}
             </div>
 
-            <div className="flex gap-3 pt-1">
+            <div className="flex gap-2.5 pt-2">
               <button
                 type="submit"
                 disabled={saving}
-                className="flex-1 py-3 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 disabled:opacity-60 active:scale-[0.98] transition-all text-sm"
+                className="btn-primary flex-1 py-3 text-xs sm:text-sm font-semibold"
               >
-                {saving ? "Creating..." : "✓ Create Product"}
+                {saving ? "Publishing…" : "Publish Product →"}
               </button>
               <button
                 type="button"
                 onClick={() => { setShowForm(false); setError(""); }}
-                className="px-4 py-3 border border-gray-200 text-gray-600 rounded-xl hover:bg-gray-50 transition-colors text-sm"
+                className="btn-ghost py-3 px-5 text-xs sm:text-sm font-medium"
               >
                 Cancel
               </button>
@@ -158,86 +185,94 @@ export function ProductsManager({ initialProducts, creatorHandle }: Props) {
         </div>
       )}
 
-      {/* Empty state */}
+      {/* Empty State */}
       {products.length === 0 && !showForm && (
-        <div className="text-center py-16 bg-white rounded-2xl border-2 border-dashed border-gray-200">
-          <div className="text-5xl mb-4">💰</div>
-          <h3 className="text-base font-semibold text-gray-900 mb-1">Start earning directly</h3>
-          <p className="text-sm text-gray-500 mb-6 max-w-xs mx-auto">
-            Create a digital product or booking and let your audience pay you via Razorpay — no website needed.
+        <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-neutral-300 p-8">
+          <div className="text-4xl mb-3">💰</div>
+          <h2 className="text-base font-bold text-neutral-900 mb-1">
+            No digital products yet
+          </h2>
+          <p className="text-xs text-neutral-500 max-w-sm mx-auto mb-6 leading-relaxed">
+            Sell downloadable files, courses, or 1:1 consultation sessions directly to your followers.
           </p>
           <button
             onClick={() => setShowForm(true)}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-colors text-sm"
+            className="btn-primary py-2.5 px-5 text-xs font-semibold"
           >
-            ➕ Create First Product
+            + Create First Product
           </button>
         </div>
       )}
 
-      {/* Products list */}
+      {/* Products List */}
       {products.length > 0 && (
         <div className="space-y-3">
           {products.map((product) => (
-            <div key={product.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm card-hover overflow-hidden">
+            <div
+              key={product.id}
+              className="bg-white rounded-2xl border border-black/[0.06] shadow-2xs card-hover overflow-hidden"
+            >
               <div className="p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-start gap-3 flex-1 min-w-0">
-                    {/* Icon */}
-                    <div className="w-12 h-12 rounded-xl bg-indigo-50 flex items-center justify-center text-2xl flex-shrink-0">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start gap-3.5 flex-1 min-w-0">
+                    <div className="w-12 h-12 rounded-xl bg-neutral-100 border border-neutral-200/80 flex items-center justify-center text-xl flex-shrink-0">
                       {product.deliveryType === "file" ? "📄" : "📅"}
                     </div>
+
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs font-semibold bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full capitalize">
+                        <span className="text-[10px] font-semibold bg-neutral-100 text-neutral-700 px-2 py-0.5 rounded-md capitalize">
                           {product.deliveryType === "file" ? "Digital File" : "Booking"}
                         </span>
                         {product.saleCount > 0 && (
-                          <span className="text-xs font-semibold bg-green-50 text-green-600 px-2 py-0.5 rounded-full">
-                            🔥 {product.saleCount} sale{product.saleCount !== 1 ? "s" : ""}
+                          <span className="text-[10px] font-semibold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-md">
+                            🔥 {product.saleCount} sold
                           </span>
                         )}
                       </div>
-                      <h3 className="font-semibold text-gray-900 text-sm">{product.title}</h3>
-                      <p className="text-indigo-600 font-bold mt-1">₹{product.price.toLocaleString("en-IN")}</p>
+
+                      <h3 className="font-semibold text-xs sm:text-sm text-neutral-900 line-clamp-2">
+                        {product.title}
+                      </h3>
+
+                      <p className="text-neutral-950 font-bold text-sm mt-1">
+                        ₹{product.price.toLocaleString("en-IN")}
+                      </p>
                     </div>
                   </div>
 
-                  <a
+                  <Link
                     href={`/${creatorHandle}/buy/${product.id}`}
                     target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-shrink-0 px-3 py-1.5 bg-green-50 text-green-700 border border-green-200 rounded-lg text-xs font-semibold hover:bg-green-100 transition-colors"
+                    className="touch-target-44 flex-shrink-0 px-3 py-1.5 bg-neutral-100 hover:bg-neutral-200/80 text-neutral-800 border border-neutral-200/60 rounded-xl text-xs font-semibold transition-colors"
                   >
-                    Test Buy ↗
-                  </a>
+                    View Buy Page ↗
+                  </Link>
                 </div>
               </div>
 
               {/* Status bar */}
-              <div className="px-5 py-2.5 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <div className={`w-2 h-2 rounded-full ${product.razorpayPaymentLinkId ? "bg-green-400" : "bg-amber-400"}`} />
-                  <span className="text-xs text-gray-500">
-                    {product.razorpayPaymentLinkId ? "Razorpay link active" : "Payment link pending (buy to generate)"}
+              <div className="px-5 py-2.5 bg-[#fafafa] border-t border-neutral-100 flex items-center justify-between text-[11px]">
+                <div className="flex items-center gap-2">
+                  <span className={`w-2 h-2 rounded-full ${product.razorpayPaymentLinkId ? "bg-emerald-500" : "bg-amber-500"}`} />
+                  <span className="text-neutral-500">
+                    {product.razorpayPaymentLinkId ? "Razorpay link active" : "Razorpay test mode ready"}
                   </span>
                 </div>
-                <span className="text-xs text-gray-400">{product.saleCount} sold</span>
+                <span className="text-neutral-400 font-mono">{product.saleCount} sales</span>
               </div>
             </div>
           ))}
         </div>
       )}
 
-      {/* Razorpay notice */}
-      <div className="flex items-start gap-3 p-4 bg-amber-50 border border-amber-100 rounded-xl">
-        <span className="text-lg flex-shrink-0">💡</span>
-        <div className="text-xs text-amber-800">
-          <p className="font-semibold mb-0.5">Test Mode Active</p>
-          <p>Payment links use Razorpay test mode. Add{" "}
-            <code className="bg-amber-100 px-1 rounded font-mono">RAZORPAY_KEY_ID</code> and{" "}
-            <code className="bg-amber-100 px-1 rounded font-mono">RAZORPAY_KEY_SECRET</code>{" "}
-            to <code className="bg-amber-100 px-1 rounded font-mono">.env.local</code> to activate live payments.
+      {/* Razorpay Test Mode Banner */}
+      <div className="flex items-start gap-3 p-4 bg-white border border-neutral-200/80 rounded-2xl shadow-2xs">
+        <span className="text-base flex-shrink-0">💳</span>
+        <div className="text-xs text-neutral-600 leading-relaxed">
+          <p className="font-semibold text-neutral-900 mb-0.5">Test Payments Active</p>
+          <p>
+            Transactions run in Razorpay test mode. Add your live <code className="bg-neutral-100 px-1 py-0.5 rounded font-mono text-[11px]">RAZORPAY_KEY_ID</code> and <code className="bg-neutral-100 px-1 py-0.5 rounded font-mono text-[11px]">RAZORPAY_KEY_SECRET</code> to <code className="bg-neutral-100 px-1 py-0.5 rounded font-mono text-[11px]">.env.local</code> when you are ready to accept live INR payments.
           </p>
         </div>
       </div>
