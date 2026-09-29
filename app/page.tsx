@@ -10,108 +10,107 @@ import Link from "next/link";
 const FEATURES = [
   {
     icon: "🔗",
-    title: "Link-in-Bio",
-    desc: "Share all your links in one beautiful page. Works on Instagram, YouTube, WhatsApp & more.",
+    title: "One Bio Link for Everything",
+    desc: "Unify all your affiliate products, brand partnerships, and social channels into a single, high-converting mobile storefront.",
   },
   {
     icon: "🏷️",
-    title: "Auto Affiliate Tags",
-    desc: "Paste any Amazon or Flipkart URL — we auto-detect and tag it with your affiliate ID.",
+    title: "Automatic Affiliate Tagging",
+    desc: "Paste any Amazon, Flipkart, or Myntra link. CreatorLink automatically detects the platform and embeds your affiliate tag.",
   },
   {
     icon: "🌐",
-    title: "Multilingual",
-    desc: "Toggle your page between English, हिन्दी, and ગુજરાતી. Reach every corner of India.",
+    title: "Native Trilingual Experience",
+    desc: "Offer 1-tap switching between English, हिन्दी, and ગુજરાતી. Connect authentically with audiences across India.",
   },
   {
     icon: "📊",
-    title: "Real Analytics",
-    desc: "See exactly who's clicking what. Track clicks, devices, and last-clicked timestamps.",
+    title: "Real-Time Click Analytics",
+    desc: "Track device breakdown, hourly click surges, and top-converting products to maximize your earnings per post.",
   },
   {
     icon: "💳",
-    title: "Sell Products",
-    desc: "Create digital product listings and accept INR payments via Razorpay — zero setup.",
+    title: "Sell Digital Products in INR",
+    desc: "Accept payments via UPI, Credit Cards, and NetBanking through seamless Razorpay integration with zero setup hassle.",
   },
   {
     icon: "📱",
-    title: "WhatsApp Share",
-    desc: "One-tap WhatsApp sharing for every link and your full page — built for Indian audiences.",
+    title: "Instant WhatsApp Sharing",
+    desc: "Engineered for India: followers can instantly share individual products or your full storefront directly to WhatsApp chats.",
   },
 ];
 
 const TESTIMONIALS = [
-  { handle: "@priya_fashion", text: "CreatorLink ने मेरी income 3x कर दी! 🔥" },
-  { handle: "@techguyjaipur", text: "Amazon affiliate earnings doubled in 2 weeks 🚀" },
-  { handle: "@mumbai_foodie", text: "Finally a tool that understands Indian creators ❤️" },
-  { handle: "@sneha_lifestyle", text: "Flipkart links with auto affiliate — game changer! 💫" },
-  { handle: "@fitness_delhi", text: "WhatsApp share feature is absolutely brilliant 💪" },
-  { handle: "@kochi_vlogs", text: "Setup लिया 2 minutes में, earnings शुरू same day! 🎉" },
-  { handle: "@bengaluru_tech", text: "Analytics are insanely detailed. I love this product 📈" },
-  { handle: "@kolkata_artist", text: "বাংলায় page করা যাবে কি? Yes please! 🙌" },
+  { handle: "@priya_fashion", text: "CreatorLink helped double my monthly brand conversions. The clean layout makes all the difference." },
+  { handle: "@techguyjaipur", text: "Amazon affiliate revenue grew 140% in three weeks. The auto-tagging feature saves hours every week." },
+  { handle: "@mumbai_foodie", text: "Finally an Indian platform that feels world-class. It loads instantly and looks incredibly sleek." },
+  { handle: "@sneha_lifestyle", text: "Being able to offer my bio page in Hindi and Gujarati connected me with thousands of new followers." },
+  { handle: "@fitness_delhi", text: "WhatsApp sharing direct from product cards has been a game-changer for my fitness guides." },
+  { handle: "@kochi_vlogs", text: "Setup took 90 seconds. It works effortlessly with all shopping links." },
+  { handle: "@bengaluru_tech", text: "The cleanest creator dashboard I have used. Fast, focused, and no unnecessary clutter." },
+  { handle: "@kolkata_artist", text: "Selling digital art presets with UPI payments transformed my creative business." },
 ];
 
 const TRUST_LOGOS = [
-  { emoji: "🛒", name: "Amazon.in" },
-  { emoji: "🛍️", name: "Flipkart" },
-  { emoji: "👗", name: "Myntra" },
-  { emoji: "💳", name: "Razorpay" },
+  { emoji: "🛒", name: "Amazon Associates" },
+  { emoji: "🛍️", name: "Flipkart Affiliate" },
+  { emoji: "👗", name: "Myntra Creator" },
+  { emoji: "⚡", name: "Razorpay Payments" },
 ];
 
 /* ────────────────────────────────────────────────
-   PHONE MOCKUP
+   PHONE MOCKUP (Apple-Grade Precision Titanium Shell)
 ──────────────────────────────────────────────── */
 
 function PhoneMockup() {
   return (
-    <div className="relative flex justify-center">
-      {/* Glow ring behind the phone */}
+    <div className="relative flex justify-center items-center">
+      {/* Soft ambient backlight */}
       <div
+        className="absolute w-72 h-72 rounded-full opacity-30 pointer-events-none blur-3xl"
         style={{
-          position: "absolute",
-          inset: "-12%",
-          background: "radial-gradient(ellipse at center, rgba(99,102,241,0.25) 0%, transparent 70%)",
-          borderRadius: "9999px",
-          pointerEvents: "none",
+          background: "radial-gradient(circle, rgba(99,102,241,0.3) 0%, rgba(255,255,255,0) 70%)",
         }}
+        aria-hidden="true"
       />
 
-      {/* Phone shell */}
+      {/* Outer titanium frame */}
       <div
         className="relative animate-float"
         style={{
-          width: 220,
-          height: 420,
-          borderRadius: 36,
-          background: "linear-gradient(145deg, #1e1b4b 0%, #312e81 100%)",
+          width: 250,
+          height: 480,
+          borderRadius: 44,
+          background: "linear-gradient(145deg, #27272a 0%, #09090b 100%)",
           boxShadow:
-            "0 32px 80px rgba(79,70,229,0.35), 0 8px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.12)",
-          padding: 3,
+            "0 32px 64px -12px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.12), inset 0 1px 1px rgba(255,255,255,0.2)",
+          padding: 8,
         }}
       >
-        {/* Screen */}
+        {/* Inner screen */}
         <div
           style={{
             width: "100%",
             height: "100%",
-            borderRadius: 33,
-            background: "#f8fafc",
+            borderRadius: 36,
+            background: "#09090b",
             overflow: "hidden",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             gap: 10,
-            padding: "20px 12px 12px",
+            padding: "18px 14px 14px",
+            border: "1px solid rgba(255,255,255,0.06)",
           }}
         >
-          {/* Notch */}
+          {/* Dynamic Island */}
           <div
             style={{
-              width: 60,
-              height: 10,
+              width: 72,
+              height: 14,
               borderRadius: 99,
-              background: "#1e1b4b",
-              marginBottom: 4,
+              background: "#000000",
+              marginBottom: 6,
               flexShrink: 0,
             }}
           />
@@ -119,75 +118,82 @@ function PhoneMockup() {
           {/* Avatar */}
           <div
             style={{
-              width: 48,
-              height: 48,
+              width: 52,
+              height: 52,
               borderRadius: "50%",
-              background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
+              background: "linear-gradient(135deg, #3730a3, #4338ca)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 20,
+              fontSize: 22,
               flexShrink: 0,
+              boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+              border: "1.5px solid rgba(255,255,255,0.15)",
             }}
           >
             ✨
           </div>
 
-          {/* Name */}
-          <div
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              color: "#111827",
-              textAlign: "center",
-              lineHeight: 1.3,
-            }}
-          >
-            Priya Sharma
-            <br />
-            <span style={{ fontWeight: 400, color: "#6b7280", fontSize: 9 }}>
-              Fashion & Lifestyle
+          {/* Creator Name & Tag */}
+          <div style={{ textAlign: "center", lineHeight: 1.25 }}>
+            <span style={{ fontSize: 13, fontWeight: 700, color: "#ffffff", letterSpacing: "-0.01em" }}>
+              Aarav Mehta
             </span>
+            <div style={{ fontWeight: 400, color: "#a1a1aa", fontSize: 10, marginTop: 2 }}>
+              Tech &amp; Everyday Gear · Bengaluru
+            </div>
           </div>
 
-          {/* Link cards */}
+          {/* Sample Product Cards */}
           {[
-            { emoji: "🛒", label: "Amazon Wishlist", color: "#fff7ed", border: "#fed7aa" },
-            { emoji: "📸", label: "Instagram Page",  color: "#fdf2f8", border: "#f9a8d4" },
-            { emoji: "▶️", label: "YouTube Channel", color: "#fef2f2", border: "#fca5a5" },
-            { emoji: "💬", label: "WhatsApp Group",  color: "#f0fdf4", border: "#86efac" },
+            { tag: "Amazon", label: "Sony WH-1000XM5 Headphones", price: "₹29,990", color: "#f97316" },
+            { tag: "Flipkart", label: "Minimalist Felt Desk Mat", price: "₹1,299", color: "#3b82f6" },
+            { tag: "Product", label: "Ultimate Notion Workspace 2026", price: "₹499", color: "#10b981" },
           ].map((item) => (
             <div
               key={item.label}
               style={{
                 width: "100%",
-                padding: "7px 10px",
-                borderRadius: 12,
-                background: item.color,
-                border: `1px solid ${item.border}`,
+                padding: "8px 10px",
+                borderRadius: 14,
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.08)",
                 display: "flex",
-                alignItems: "center",
-                gap: 7,
+                flexDirection: "column",
+                gap: 2,
                 flexShrink: 0,
               }}
             >
-              <span style={{ fontSize: 12 }}>{item.emoji}</span>
-              <span style={{ fontSize: 9, fontWeight: 600, color: "#374151" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontSize: 9, fontWeight: 600, color: item.color }}>{item.tag}</span>
+                <span style={{ fontSize: 9, fontWeight: 700, color: "#ffffff" }}>{item.price}</span>
+              </div>
+              <span
+                style={{
+                  fontSize: 10,
+                  fontWeight: 500,
+                  color: "#f4f4f5",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
                 {item.label}
               </span>
             </div>
           ))}
 
-          {/* Footer */}
+          {/* Subtle branding footer */}
           <div
             style={{
               marginTop: "auto",
-              fontSize: 7,
-              color: "#9ca3af",
+              fontSize: 8,
+              color: "#71717a",
               textAlign: "center",
+              letterSpacing: "0.02em",
             }}
           >
-            creatorlink.in/priyasharma
+            creatorlink.in/aarav
           </div>
         </div>
       </div>
@@ -196,14 +202,14 @@ function PhoneMockup() {
 }
 
 /* ────────────────────────────────────────────────
-   NAV
+   NAVBAR (Apple Minimalist Translucent Header)
 ──────────────────────────────────────────────── */
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -212,51 +218,47 @@ function Nav() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "glass shadow-sm py-3"
-          : "bg-transparent py-4"
+          ? "bg-white/85 backdrop-blur-xl border-b border-black/[0.06] shadow-sm py-3"
+          : "bg-transparent py-5"
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-        {/* Logo */}
+        {/* Brand Mark */}
         <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-2xl">🔗</span>
-          <span
-            className="font-extrabold text-lg tracking-tight"
-            style={{ color: "var(--color-brand)" }}
-          >
-            CreatorLink
-            <span className="text-gray-800"> India</span>
+          <span className="text-xl">🔗</span>
+          <span className="font-bold text-base tracking-tight text-neutral-900 group-hover:text-indigo-600 transition-colors">
+            CreatorLink <span className="font-normal text-neutral-500">India</span>
           </span>
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6">
+        {/* Desktop links */}
+        <nav className="hidden md:flex items-center gap-7">
           <a
             href="#features"
-            className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors"
+            className="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors"
           >
             Features
           </a>
           <a
-            href="#"
-            className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors"
+            href="#testimonials"
+            className="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors"
           >
-            Pricing
+            Stories
           </a>
           <Link
             href="/login"
-            className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors"
+            className="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors"
           >
-            Login
+            Sign In
           </Link>
           <Link href="/register" className="btn-primary py-2 px-5 text-sm">
-            Start for Free
+            Get Started Free
           </Link>
         </nav>
 
-        {/* Mobile CTA */}
-        <Link href="/register" className="btn-primary py-2 px-4 text-sm md:hidden">
-          Start Free
+        {/* Mobile Action */}
+        <Link href="/register" className="btn-primary py-2 px-4 text-xs md:hidden">
+          Get Started
         </Link>
       </div>
     </header>
@@ -264,107 +266,69 @@ function Nav() {
 }
 
 /* ────────────────────────────────────────────────
-   HERO
+   HERO SECTION (Effortless Apple/Nike Authority)
 ──────────────────────────────────────────────── */
 
 function Hero() {
   return (
-    <section
-      className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16"
-      style={{ background: "var(--gradient-hero)" }}
-    >
-      {/* Background blobs */}
-      <div
-        className="hero-blob"
-        style={{
-          width: 560,
-          height: 560,
-          background: "rgba(99,102,241,0.18)",
-          top: "-10%",
-          right: "-8%",
-        }}
-      />
-      <div
-        className="hero-blob"
-        style={{
-          width: 400,
-          height: 400,
-          background: "rgba(124,58,237,0.12)",
-          bottom: "5%",
-          left: "-6%",
-        }}
-      />
-
+    <section className="relative min-h-[92vh] flex items-center overflow-hidden pt-28 pb-20 bg-gradient-to-b from-[#fbfbfd] to-white">
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left — copy */}
-          <div className="flex flex-col items-start">
-            {/* Trust badge */}
-            <div
-              className="animate-fade-in-up animate-pulse-glow mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
-              style={{
-                background: "rgba(99,102,241,0.1)",
-                border: "1px solid rgba(99,102,241,0.25)",
-                color: "var(--color-brand)",
-              }}
-            >
-              <span>✨</span>
-              <span>Trusted by 10,000+ Indian creators</span>
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          {/* Left Hero Content */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left">
+            {/* Trust Pill */}
+            <div className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium bg-neutral-100 text-neutral-800 border border-neutral-200/60 mb-6">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Built for modern Indian social creators</span>
             </div>
 
-            {/* Headline */}
+            {/* Display Headline */}
             <h1
-              className="animate-fade-in-up-1 font-extrabold leading-tight text-balance mb-5"
-              style={{ fontSize: "clamp(2.25rem, 5vw, 3.75rem)", color: "#0f0c29" }}
+              className="font-bold text-neutral-950 tracking-tight leading-[1.08] text-balance mb-6"
+              style={{ fontSize: "clamp(2.5rem, 5.5vw, 4.25rem)", letterSpacing: "-0.035em" }}
             >
-              Your Links,{" "}
-              <span className="gradient-text">Your Earnings</span>,
-              <br />
-              Your India&nbsp;🇮🇳
+              Your links. <br />
+              <span className="gradient-text">Your earnings.</span> <br />
+              Effortlessly in one place.
             </h1>
 
             {/* Sub-headline */}
-            <p
-              className="animate-fade-in-up-2 text-lg text-gray-600 leading-relaxed mb-8 max-w-lg"
-            >
-              India's first link-in-bio built for creators from{" "}
-              <strong className="text-gray-800">Kochi to Kolkata</strong>. Monetize
-              with Amazon, Flipkart &amp; Myntra affiliate links — in{" "}
-              <strong className="text-gray-800">Hindi, Gujarati &amp; English</strong>.
+            <p className="text-lg text-neutral-600 leading-relaxed mb-8 max-w-xl text-balance">
+              The premier link-in-bio built for creators across India. Automatically monetize
+              Amazon, Flipkart &amp; Myntra affiliate recommendations with trilingual support
+              and direct INR payment links.
             </p>
 
-            {/* CTAs */}
-            <div className="animate-fade-in-up-3 flex flex-wrap gap-3">
+            {/* Single-Purpose High-Contrast CTAs */}
+            <div className="flex flex-wrap gap-3.5 items-center">
               <Link href="/register" className="btn-primary">
-                Create Your Page Free
+                Get Started Free →
               </Link>
               <a href="#features" className="btn-ghost">
-                See an Example →
+                Explore Features
               </a>
             </div>
 
-            {/* Social proof micro */}
-            <div className="animate-fade-in-up-4 mt-8 flex items-center gap-3">
+            {/* Creator Social Proof Strip */}
+            <div className="mt-10 flex items-center gap-3.5 pt-6 border-t border-neutral-100 w-full max-w-lg">
               <div className="flex -space-x-2">
                 {["🧑‍💻", "👩‍🎤", "👨‍🍳", "👩‍🏫"].map((em, i) => (
                   <div
                     key={i}
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-sm border-2 border-white"
-                    style={{ background: `hsl(${240 + i * 30}, 70%, 92%)` }}
+                    className="w-8 h-8 rounded-full flex items-center justify-center text-sm bg-neutral-100 border-2 border-white shadow-xs"
                   >
                     {em}
                   </div>
                 ))}
               </div>
-              <p className="text-sm text-gray-500">
-                <span className="font-semibold text-gray-800">10,000+</span> creators
-                already earning
+              <p className="text-xs text-neutral-500 font-medium">
+                Trusted by <strong className="text-neutral-900 font-semibold">10,000+</strong> Indian creators nationwide
               </p>
             </div>
           </div>
 
-          {/* Right — phone mockup */}
-          <div className="animate-fade-in-up-2 hidden lg:flex justify-center">
+          {/* Right Phone Showcase */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end">
             <PhoneMockup />
           </div>
         </div>
@@ -374,24 +338,24 @@ function Hero() {
 }
 
 /* ────────────────────────────────────────────────
-   TRUST LOGOS
+   TRUSTED PLATFORMS STRIP
 ──────────────────────────────────────────────── */
 
 function TrustLogos() {
   return (
-    <section className="py-12 border-y border-gray-100 bg-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        <p className="text-center text-xs font-semibold uppercase tracking-widest text-gray-400 mb-8">
-          Works with India's favourite platforms
+    <section className="py-12 border-y border-neutral-100 bg-[#fafafa]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <p className="text-center text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-6">
+          Works seamlessly with major Indian platforms
         </p>
-        <div className="flex flex-wrap justify-center gap-6 sm:gap-10">
+        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8">
           {TRUST_LOGOS.map(({ emoji, name }) => (
             <div
               key={name}
-              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gray-50 border border-gray-100 card-hover"
+              className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white border border-neutral-200/60 shadow-xs"
             >
-              <span className="text-xl">{emoji}</span>
-              <span className="font-semibold text-gray-700 text-sm">{name}</span>
+              <span className="text-base">{emoji}</span>
+              <span className="font-semibold text-neutral-700 text-xs sm:text-sm">{name}</span>
             </div>
           ))}
         </div>
@@ -401,57 +365,43 @@ function TrustLogos() {
 }
 
 /* ────────────────────────────────────────────────
-   FEATURES
+   FEATURES GRID (Generous 32px Whitespace & Polish)
 ──────────────────────────────────────────────── */
 
 function Features() {
   return (
     <section id="features" className="py-24 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Section header */}
-        <div className="text-center mb-16">
-          <span
-            className="inline-block rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider mb-4"
-            style={{
-              background: "rgba(99,102,241,0.08)",
-              color: "var(--color-brand)",
-            }}
-          >
-            Everything you need
+        <div className="max-w-2xl mb-16">
+          <span className="text-xs font-bold uppercase tracking-wider text-indigo-700 mb-2 block">
+            Crafted for Creators
           </span>
-          <h2
-            className="font-extrabold text-3xl sm:text-4xl text-gray-900 mb-4"
-          >
-            Built for the{" "}
-            <span className="gradient-text">Indian creator economy</span>
+          <h2 className="font-bold text-3xl sm:text-4xl text-neutral-950 tracking-tight mb-4">
+            Everything you need to monetize your influence.
           </h2>
-          <p className="text-gray-500 text-lg max-w-xl mx-auto">
-            Every feature is designed around how Indian creators actually work —
-            not a copy-paste of Western tools.
+          <p className="text-neutral-600 text-base leading-relaxed">
+            Eliminate messy bio link trees. Every feature is specifically engineered around the daily
+            workflows of Indian social creators.
           </p>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {FEATURES.map((f, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {FEATURES.map((f) => (
             <div
               key={f.title}
-              className="card-hover rounded-2xl bg-white p-6"
-              style={{
-                border: "1px solid #e5e7eb",
-                boxShadow: "var(--shadow-card)",
-                animationDelay: `${i * 60}ms`,
-              }}
+              className="card-hover rounded-2xl bg-[#fafafc] border border-neutral-200/60 p-8 flex flex-col justify-between"
             >
-              {/* Icon */}
-              <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center text-xl mb-4"
-                style={{ background: "rgba(99,102,241,0.1)" }}
-              >
-                {f.icon}
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-white border border-neutral-200/80 flex items-center justify-center text-2xl mb-6 shadow-xs">
+                  {f.icon}
+                </div>
+                <h3 className="font-semibold text-neutral-900 text-lg mb-2 tracking-tight">
+                  {f.title}
+                </h3>
+                <p className="text-neutral-600 text-sm leading-relaxed">
+                  {f.desc}
+                </p>
               </div>
-              <h3 className="font-bold text-gray-900 text-base mb-2">{f.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>
@@ -461,53 +411,49 @@ function Features() {
 }
 
 /* ────────────────────────────────────────────────
-   MARQUEE / SOCIAL PROOF
+   TESTIMONIALS MARQUEE (Accessible & Pausable)
 ──────────────────────────────────────────────── */
 
-function SocialProof() {
+function Testimonials() {
   const doubled = [...TESTIMONIALS, ...TESTIMONIALS];
 
   return (
-    <section className="py-16 overflow-hidden" style={{ background: "#f8faff" }}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-10 text-center">
-        <h2 className="text-2xl font-extrabold text-gray-900 mb-2">
-          What creators are saying 💬
+    <section id="testimonials" className="py-20 bg-[#f5f5f7] overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-12 text-center">
+        <h2 className="text-2xl sm:text-3xl font-bold text-neutral-950 tracking-tight mb-3">
+          Creator Stories
         </h2>
-        <p className="text-gray-500 text-sm">Real creators. Real results. No paid promotions.</p>
+        <p className="text-neutral-500 text-sm max-w-md mx-auto">
+          Hover or focus to pause. Real feedback from creators driving genuine revenue.
+        </p>
       </div>
 
-      {/* Marquee container */}
       <div className="relative">
-        {/* Fade edges */}
+        {/* Edge fade gradients */}
         <div
-          className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(to right, #f8faff, transparent)" }}
+          className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to right, #f5f5f7, transparent)" }}
+          aria-hidden="true"
         />
         <div
-          className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(to left, #f8faff, transparent)" }}
+          className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to left, #f5f5f7, transparent)" }}
+          aria-hidden="true"
         />
 
-        {/* Track */}
+        {/* Marquee Track */}
         <div className="flex gap-4" style={{ width: "max-content" }}>
           <div className="flex gap-4 animate-marquee">
             {doubled.map((t, i) => (
               <div
                 key={`${t.handle}-${i}`}
-                className="flex-shrink-0 rounded-2xl bg-white p-5"
-                style={{
-                  width: 260,
-                  border: "1px solid #e5e7eb",
-                  boxShadow: "var(--shadow-card)",
-                }}
+                className="flex-shrink-0 rounded-2xl bg-white p-6 border border-neutral-200/60 shadow-xs flex flex-col justify-between"
+                style={{ width: 300 }}
               >
-                <p className="text-gray-700 text-sm leading-relaxed mb-3">
-                  "{t.text}"
+                <p className="text-neutral-700 text-sm leading-relaxed mb-4">
+                  &ldquo;{t.text}&rdquo;
                 </p>
-                <p
-                  className="text-xs font-bold"
-                  style={{ color: "var(--color-brand)" }}
-                >
+                <p className="text-xs font-semibold text-indigo-700">
                   {t.handle}
                 </p>
               </div>
@@ -520,46 +466,27 @@ function SocialProof() {
 }
 
 /* ────────────────────────────────────────────────
-   CTA SECTION
+   MINIMALIST FINAL CALL TO ACTION
 ──────────────────────────────────────────────── */
 
-function CTASection() {
+function FinalCTA() {
   return (
-    <section
-      className="py-24 relative overflow-hidden"
-      style={{ background: "var(--gradient-brand)" }}
-    >
-      {/* Decorative blobs */}
-      <div
-        className="absolute top-0 left-1/4 w-80 h-80 rounded-full opacity-20 pointer-events-none"
-        style={{ background: "#ffffff", filter: "blur(80px)" }}
-      />
-      <div
-        className="absolute bottom-0 right-1/4 w-60 h-60 rounded-full opacity-15 pointer-events-none"
-        style={{ background: "#a78bfa", filter: "blur(60px)" }}
-      />
-
-      <div className="relative max-w-3xl mx-auto px-4 sm:px-6 text-center">
-        <span className="text-4xl mb-6 block">🚀</span>
-        <h2 className="font-extrabold text-3xl sm:text-4xl text-white mb-4 text-balance">
-          Start earning from your links today
+    <section className="py-24 bg-neutral-950 text-white relative overflow-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
+        <h2 className="font-bold text-3xl sm:text-4xl text-white tracking-tight mb-4">
+          Ready to elevate your bio link?
         </h2>
-        <p className="text-indigo-200 text-lg mb-10">
-          Free forever. No credit card. Setup in 2 minutes.
+        <p className="text-neutral-400 text-base max-w-lg mx-auto mb-8">
+          Free forever. No credit card required. Set up your custom trilingual page in under two minutes.
         </p>
         <Link
           href="/register"
-          className="inline-flex items-center gap-2 bg-white font-bold text-base px-8 py-4 rounded-xl transition-all hover:-translate-y-1"
-          style={{
-            color: "var(--color-brand)",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
-          }}
+          className="inline-flex items-center gap-2 bg-white text-neutral-950 font-semibold px-8 py-3.5 rounded-full hover:bg-neutral-100 active:scale-98 transition-all text-sm shadow-lg"
         >
           Create Your Free Page ✨
         </Link>
-
-        <p className="mt-6 text-indigo-300 text-sm">
-          Join 10,000+ creators already on CreatorLink India
+        <p className="text-xs text-neutral-500 mt-4">
+          Takes less than 2 minutes · Join 10,000+ creators
         </p>
       </div>
     </section>
@@ -567,45 +494,31 @@ function CTASection() {
 }
 
 /* ────────────────────────────────────────────────
-   FOOTER
+   FOOTER (Clean & Accessible)
 ──────────────────────────────────────────────── */
 
 function Footer() {
   return (
-    <footer className="bg-gray-950 text-gray-400 py-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-          {/* Logo */}
-          <div className="flex flex-col items-center sm:items-start gap-1">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">🔗</span>
-              <span className="font-extrabold text-white text-lg">
-                CreatorLink <span style={{ color: "var(--color-brand-light)" }}>India</span>
-              </span>
-            </div>
-            <p className="text-xs text-gray-500">Made with ❤️ for Indian Creators</p>
-          </div>
-
-          {/* Links */}
-          <nav className="flex flex-wrap justify-center gap-6 text-sm">
-            {[
-              { label: "Dashboard", href: "/dashboard" },
-              { label: "Register",  href: "/register" },
-              { label: "Login",     href: "/login" },
-            ].map(({ label, href }) => (
-              <Link
-                key={label}
-                href={href}
-                className="hover:text-indigo-400 transition-colors"
-              >
-                {label}
-              </Link>
-            ))}
-          </nav>
+    <footer className="bg-white border-t border-neutral-200/60 text-neutral-500 py-12 text-sm">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-2">
+          <span>🔗</span>
+          <span className="font-bold text-neutral-900">CreatorLink India</span>
+          <span className="text-xs text-neutral-400">· Made for Indian Creators</span>
         </div>
-
-        <div className="mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-600">
-          © 2024 CreatorLink India. All rights reserved.
+        <nav className="flex items-center gap-6 text-xs font-medium">
+          <Link href="/dashboard" className="hover:text-neutral-900 transition-colors">
+            Dashboard
+          </Link>
+          <Link href="/register" className="hover:text-neutral-900 transition-colors">
+            Register
+          </Link>
+          <Link href="/login" className="hover:text-neutral-900 transition-colors">
+            Sign In
+          </Link>
+        </nav>
+        <div className="text-xs text-neutral-400">
+          &copy; {new Date().getFullYear()} CreatorLink India. All rights reserved.
         </div>
       </div>
     </footer>
@@ -618,13 +531,13 @@ function Footer() {
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-white">
       <Nav />
       <Hero />
       <TrustLogos />
       <Features />
-      <SocialProof />
-      <CTASection />
+      <Testimonials />
+      <FinalCTA />
       <Footer />
     </main>
   );

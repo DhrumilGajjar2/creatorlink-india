@@ -1,4 +1,5 @@
 // components/SettingsForm.tsx
+// Apple & Nike Tier Settings UI
 "use client";
 import { useState } from "react";
 
@@ -92,9 +93,9 @@ export function SettingsForm({ creator }: Props) {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: form.name,
-          bio: form.bio,
-          avatarUrl: form.avatarUrl,
+          name: form.name.trim(),
+          bio: form.bio.trim(),
+          avatarUrl: form.avatarUrl.trim(),
           languages: form.languages,
           affiliateIds: form.affiliateIds,
         }),
@@ -107,168 +108,187 @@ export function SettingsForm({ creator }: Props) {
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch {
-      setError("Network error — please try again.");
+      setError("Network error. Please check your connection.");
     } finally {
       setSaving(false);
     }
   }
 
   return (
-    <div className="space-y-6 max-w-2xl">
+    <div className="space-y-7 max-w-2xl">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Update your profile and affiliate IDs for auto-tagging.</p>
+        <h1 className="text-2xl font-bold tracking-tight text-neutral-950">
+          Account Settings
+        </h1>
+        <p className="text-xs text-neutral-500 mt-1">
+          Manage your creator profile, bio page languages, and automatic affiliate tracking tags.
+        </p>
       </div>
 
-      <form onSubmit={handleSave} className="space-y-5">
-        {/* Profile section */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm divide-y divide-gray-50">
-          {/* Header */}
-          <div className="px-6 py-4 flex items-center gap-2">
-            <span className="w-8 h-8 bg-indigo-100 rounded-xl flex items-center justify-center text-sm">👤</span>
-            <h2 className="text-base font-semibold text-gray-900">Profile</h2>
+      <form onSubmit={handleSave} className="space-y-6">
+        {success && (
+          <div role="status" className="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-semibold flex items-center gap-2 animate-fade-in-up">
+            <span>✅</span> Settings updated successfully!
+          </div>
+        )}
+        {error && (
+          <div role="alert" className="p-3.5 bg-red-50 border border-red-200 text-red-700 rounded-xl text-xs flex items-center gap-2">
+            <span>⚠️</span> {error}
+          </div>
+        )}
+
+        {/* Profile Card */}
+        <div className="bg-white rounded-2xl border border-black/[0.06] shadow-2xs divide-y divide-neutral-100 overflow-hidden">
+          <div className="px-6 py-4 flex items-center gap-2.5">
+            <span className="w-8 h-8 rounded-xl bg-neutral-100 flex items-center justify-center text-sm">
+              👤
+            </span>
+            <h2 className="text-sm font-bold text-neutral-900">
+              Public Bio Profile
+            </h2>
           </div>
 
-          <div className="px-6 py-5 space-y-4">
-            {success && (
-              <div className="flex items-center gap-2 p-3 bg-green-50 border border-green-200 text-green-700 rounded-xl text-sm animate-fade-in-up">
-                <span>✅</span> Settings saved successfully!
-              </div>
-            )}
-            {error && (
-              <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm">
-                <span>⚠️</span> {error}
-              </div>
-            )}
-
-            {/* Handle (read-only) */}
+          <div className="p-6 space-y-4">
+            {/* Handle Display */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Handle</label>
-              <div className="flex items-center gap-2 px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl">
-                <span className="text-gray-400 text-sm">creatorlink.in/</span>
-                <span className="font-semibold text-gray-800 text-sm">{creator.handle}</span>
-                <span className="ml-auto text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">Cannot change</span>
+              <label className="block text-xs font-semibold text-neutral-700 mb-1.5">
+                Creator Link Handle
+              </label>
+              <div className="flex items-center gap-2 px-3.5 py-3 bg-[#f5f5f7] border border-neutral-200/80 rounded-xl">
+                <span className="text-neutral-400 font-mono text-xs">creatorlink.in/</span>
+                <span className="font-semibold text-neutral-900 font-mono text-xs">{creator.handle}</span>
+                <span className="ml-auto text-[10px] text-neutral-400 bg-white border border-neutral-200 px-2 py-0.5 rounded-full font-medium">
+                  Verified
+                </span>
               </div>
             </div>
 
-            {/* Name */}
+            {/* Display Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Display Name</label>
+              <label className="block text-xs font-semibold text-neutral-700 mb-1.5" htmlFor="set-name">
+                Display Name
+              </label>
               <input
+                id="set-name"
                 type="text"
                 required
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm bg-gray-50 focus:bg-white"
-                placeholder="Your name"
+                className="input-field text-sm"
+                placeholder="Your full name or brand"
               />
             </div>
 
             {/* Bio */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Bio</label>
+              <label className="block text-xs font-semibold text-neutral-700 mb-1.5" htmlFor="set-bio">
+                Short Bio
+              </label>
               <textarea
-                rows={3}
+                id="set-bio"
+                rows={2}
+                maxLength={150}
                 value={form.bio}
                 onChange={(e) => setForm({ ...form, bio: e.target.value })}
-                className="w-full px-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm bg-gray-50 focus:bg-white resize-none"
-                placeholder="Fashion creator & lifestyle blogger 📸"
+                className="input-field text-sm resize-none"
+                placeholder="What do you share? (e.g. Daily tech reviews & home office inspiration ✨)"
               />
-              <p className="text-xs text-gray-400 mt-1">{form.bio.length}/150 characters</p>
+              <p className="text-[11px] text-neutral-400 mt-1 text-right">
+                {form.bio.length}/150 characters
+              </p>
             </div>
 
-            {/* Avatar URL */}
+            {/* Page Languages */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Avatar URL</label>
-              <input
-                type="url"
-                value={form.avatarUrl}
-                onChange={(e) => setForm({ ...form, avatarUrl: e.target.value })}
-                className="w-full px-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm bg-gray-50 focus:bg-white"
-                placeholder="https://..."
-              />
-              <p className="text-xs text-gray-400 mt-1">Paste a direct image URL. Leave blank to use auto-generated avatar.</p>
-            </div>
-
-            {/* Language selector */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Page Languages
-                <span className="ml-1.5 text-gray-400 font-normal text-xs">(shown as toggle on your public page)</span>
+              <label className="block text-xs font-semibold text-neutral-700 mb-2">
+                Trilingual Bio Switcher
+                <span className="ml-1.5 text-neutral-400 font-normal text-[11px]">
+                  (allows visitors to switch languages on your bio page)
+                </span>
               </label>
-              <div className="flex gap-2">
-                {LANG_OPTIONS.map((lang) => (
-                  <button
-                    key={lang.value}
-                    type="button"
-                    onClick={() => toggleLang(lang.value)}
-                    className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-xl border-2 transition-all ${
-                      form.languages.includes(lang.value)
-                        ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                        : "border-gray-200 text-gray-600 hover:border-gray-300 bg-white"
-                    }`}
-                  >
-                    <span>{lang.flag}</span>
-                    {lang.label}
-                    {form.languages.includes(lang.value) && (
-                      <span className="w-4 h-4 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xs">✓</span>
-                    )}
-                  </button>
-                ))}
+              <div className="flex flex-wrap gap-2">
+                {LANG_OPTIONS.map((lang) => {
+                  const active = form.languages.includes(lang.value);
+                  return (
+                    <button
+                      key={lang.value}
+                      type="button"
+                      onClick={() => toggleLang(lang.value)}
+                      className={`
+                        touch-target-44 flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-xl border transition-all cursor-pointer
+                        ${
+                          active
+                            ? "border-neutral-900 bg-neutral-900 text-white font-semibold shadow-xs"
+                            : "border-neutral-200/80 text-neutral-600 hover:border-neutral-300 bg-white"
+                        }
+                      `}
+                    >
+                      <span>{lang.flag}</span>
+                      <span>{lang.label}</span>
+                      {active && <span className="text-[11px]">✓</span>}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Affiliate IDs section */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm divide-y divide-gray-50">
-          <div className="px-6 py-4 flex items-center gap-2">
-            <span className="w-8 h-8 bg-green-100 rounded-xl flex items-center justify-center text-sm">💰</span>
+        {/* Affiliate Tracking Tags */}
+        <div className="bg-white rounded-2xl border border-black/[0.06] shadow-2xs divide-y divide-neutral-100 overflow-hidden">
+          <div className="px-6 py-4 flex items-center gap-2.5">
+            <span className="w-8 h-8 rounded-xl bg-neutral-100 flex items-center justify-center text-sm">
+              🏷️
+            </span>
             <div>
-              <h2 className="text-base font-semibold text-gray-900">Affiliate IDs</h2>
+              <h2 className="text-sm font-bold text-neutral-900">
+                Affiliate Auto-Tagging
+              </h2>
             </div>
           </div>
 
-          <div className="px-6 py-5 space-y-4">
-            <div className="flex items-start gap-2 p-3 bg-blue-50 border border-blue-100 rounded-xl">
-              <span>💡</span>
-              <p className="text-xs text-blue-800">
-                These are <strong>automatically appended</strong> to every link you add. Set them once and forget — every paste auto-tags!
+          <div className="p-6 space-y-4">
+            <div className="flex items-start gap-2.5 p-3.5 bg-neutral-50 border border-neutral-200/80 rounded-xl">
+              <span className="text-sm">💡</span>
+              <p className="text-xs text-neutral-600 leading-relaxed">
+                Add your tracking IDs once. Whenever you paste a product link into CreatorLink, your tag is <strong>automatically appended</strong> before visitors are redirected.
               </p>
             </div>
 
             {AFFILIATE_FIELDS.map(({ key, label, emoji, placeholder, hint, bg, border, text }) => (
               <div key={key}>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                  <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold mr-2 ${bg} ${text} border ${border}`}>
+                <label className="block text-xs font-semibold text-neutral-700 mb-1.5" htmlFor={`aff-${key}`}>
+                  <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold mr-1.5 ${bg} ${text} border ${border}`}>
                     {emoji} {label.split(" ")[0]}
                   </span>
                   {label}
                 </label>
                 <input
+                  id={`aff-${key}`}
                   type="text"
                   value={form.affiliateIds[key as keyof typeof form.affiliateIds]}
                   onChange={(e) =>
                     setForm({
                       ...form,
-                      affiliateIds: { ...form.affiliateIds, [key]: e.target.value },
+                      affiliateIds: { ...form.affiliateIds, [key]: e.target.value.trim() },
                     })
                   }
-                  className="w-full px-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm bg-gray-50 focus:bg-white font-mono"
+                  className="input-field text-xs sm:text-sm font-mono"
                   placeholder={placeholder}
                 />
-                <p className="text-xs text-gray-400 mt-1 font-mono">{hint}</p>
+                <p className="text-[11px] text-neutral-400 mt-1 font-mono">{hint}</p>
               </div>
             ))}
           </div>
         </div>
 
+        {/* Save Button */}
         <button
           type="submit"
           disabled={saving}
-          className="w-full py-3.5 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 disabled:opacity-60 active:scale-[0.98] transition-all text-sm shadow-sm shadow-indigo-200"
+          className="btn-primary w-full py-3.5 text-xs sm:text-sm font-semibold disabled:opacity-50"
         >
-          {saving ? "Saving..." : "✓ Save Settings"}
+          {saving ? "Saving Changes…" : "Save Settings →"}
         </button>
       </form>
     </div>
