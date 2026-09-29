@@ -17,7 +17,7 @@ interface DashboardShellProps {
   children: ReactNode;
 }
 
-// ─── Nav items config ─────────────────────────────────────────────────────────
+// ─── Nav Items Config ─────────────────────────────────────────────────────────
 
 interface NavItem {
   label: string;
@@ -35,7 +35,6 @@ const NAV_ITEMS: NavItem[] = [
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-/** Returns true when the nav item should be treated as active */
 function isActive(itemHref: string, pathname: string): boolean {
   if (itemHref === "/dashboard") {
     return pathname === "/dashboard";
@@ -43,7 +42,6 @@ function isActive(itemHref: string, pathname: string): boolean {
   return pathname.startsWith(itemHref);
 }
 
-/** Avatar circle: first letter of handle */
 function AvatarCircle({
   handle,
   size = "sm",
@@ -55,9 +53,9 @@ function AvatarCircle({
   return (
     <div
       className={`
-        rounded-full bg-indigo-100 text-indigo-700 font-bold
+        rounded-full bg-neutral-100 text-neutral-900 font-semibold border border-neutral-200/80
         flex items-center justify-center select-none flex-shrink-0
-        ${size === "sm" ? "w-8 h-8 text-sm" : "w-10 h-10 text-base"}
+        ${size === "sm" ? "w-8 h-8 text-xs" : "w-11 h-11 text-sm"}
       `}
       aria-hidden="true"
     >
@@ -72,24 +70,18 @@ function Logo() {
   return (
     <Link
       href="/dashboard"
-      className="flex items-center gap-1.5 select-none focus:outline-none"
-      aria-label="CreatorLink dashboard home"
+      className="flex items-center gap-2 select-none group"
+      aria-label="CreatorLink dashboard"
     >
-      <span className="text-lg">🔗</span>
-      <span
-        className="
-          font-extrabold text-transparent bg-clip-text
-          bg-gradient-to-r from-indigo-600 to-purple-600
-          text-base tracking-tight
-        "
-      >
-        CreatorLink
+      <span className="text-xl">🔗</span>
+      <span className="font-bold text-sm tracking-tight text-neutral-900 group-hover:text-indigo-600 transition-colors">
+        CreatorLink <span className="font-normal text-neutral-400">India</span>
       </span>
     </Link>
   );
 }
 
-// ─── Logout button ────────────────────────────────────────────────────────────
+// ─── Logout Button ────────────────────────────────────────────────────────────
 
 function LogoutButton({ router }: { router: ReturnType<typeof useRouter> }) {
   async function handleLogout() {
@@ -106,11 +98,10 @@ function LogoutButton({ router }: { router: ReturnType<typeof useRouter> }) {
     <button
       onClick={handleLogout}
       className="
-        flex items-center gap-1.5 text-xs text-gray-400
-        hover:text-red-500 transition-colors duration-150
-        px-2 py-1 rounded-lg hover:bg-red-50
+        touch-target-44 flex items-center gap-1.5 text-xs text-neutral-500
+        hover:text-red-600 transition-colors px-2.5 py-1 rounded-lg hover:bg-red-50/60
       "
-      aria-label="Log out"
+      aria-label="Log out of account"
     >
       <svg
         className="w-3.5 h-3.5"
@@ -125,89 +116,63 @@ function LogoutButton({ router }: { router: ReturnType<typeof useRouter> }) {
           d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
         />
       </svg>
-      <span className="hidden sm:inline">Logout</span>
+      <span className="hidden sm:inline font-medium">Logout</span>
     </button>
   );
 }
 
-// ─── Top bar ──────────────────────────────────────────────────────────────────
+// ─── Top Bar (Apple Frosted Glass) ────────────────────────────────────────────
 
 function TopBar({ session, router }: { session: Session; router: ReturnType<typeof useRouter> }) {
   return (
     <header
       className="
-        sticky top-0 z-50 h-16
+        sticky top-0 z-40 h-16
         flex items-center justify-between
-        px-4 md:px-6
-        bg-white border-b border-gray-100/80 shadow-sm
+        px-4 sm:px-6
+        bg-white/85 backdrop-blur-xl border-b border-black/[0.06]
       "
-      aria-label="Dashboard header"
+      aria-label="Dashboard top navigation"
     >
-      {/* Left: Logo + separator + handle */}
       <div className="flex items-center gap-3">
         <Logo />
-
-        {/* Separator + handle — desktop only */}
         <div className="hidden md:flex items-center gap-2">
-          <span className="w-px h-4 bg-gray-200" aria-hidden="true" />
-          <span className="text-gray-400 text-sm font-medium">
+          <span className="w-px h-3.5 bg-neutral-200" aria-hidden="true" />
+          <span className="text-neutral-500 text-xs font-mono">
             @{session.handle}
           </span>
         </div>
       </div>
 
-      {/* Right: actions */}
-      <div className="flex items-center gap-2 md:gap-3">
-        {/* View live page */}
+      <div className="flex items-center gap-3">
+        {/* Single Primary Preview Live Page Action */}
         <Link
           href={`/${session.handle}`}
           target="_blank"
           rel="noopener noreferrer"
           className="
-            hidden sm:flex items-center gap-1.5
-            text-indigo-600 hover:text-indigo-800
+            inline-flex items-center gap-1.5
             text-xs font-semibold
-            px-3 py-1.5 rounded-full
-            border border-indigo-100 hover:border-indigo-300
-            bg-indigo-50/50 hover:bg-indigo-50
-            transition-all duration-150
+            px-3.5 py-1.5 rounded-full
+            bg-neutral-100 hover:bg-neutral-200/80 text-neutral-800
+            transition-all duration-150 active:scale-95 border border-neutral-200/60
           "
-          aria-label={`View live page for @${session.handle}`}
+          aria-label={`Preview live bio page for @${session.handle} in new tab`}
         >
-          View Live Page
-          <svg
-            className="w-3 h-3"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2.5}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-            />
+          <span>Preview Page</span>
+          <svg className="w-3 h-3 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
         </Link>
 
-        {/* Notification dot placeholder */}
-        <div
-          className="w-2 h-2 rounded-full bg-gray-300 flex-shrink-0"
-          aria-hidden="true"
-          title="Notifications (coming soon)"
-        />
-
-        {/* Avatar */}
         <AvatarCircle handle={session.handle} size="sm" />
-
-        {/* Logout */}
         <LogoutButton router={router} />
       </div>
     </header>
   );
 }
 
-// ─── Sidebar (desktop only) ───────────────────────────────────────────────────
+// ─── Sidebar (Desktop Clean Minimalist) ───────────────────────────────────────
 
 function Sidebar({ session, pathname }: { session: Session; pathname: string }) {
   return (
@@ -215,38 +180,27 @@ function Sidebar({ session, pathname }: { session: Session; pathname: string }) 
       className="
         hidden md:flex flex-col
         w-60 flex-shrink-0
-        bg-white border-r border-gray-100
+        bg-[#fafafa] border-r border-black/[0.06]
         min-h-[calc(100vh-4rem)]
         sticky top-16 self-start
       "
-      aria-label="Sidebar navigation"
+      aria-label="Dashboard sidebar"
     >
-      {/* Creator card */}
-      <div className="flex flex-col items-center text-center pt-6 pb-4 px-4 border-b border-gray-100/80">
-        <AvatarCircle handle={session.handle} size="md" />
-        <p className="text-gray-800 font-semibold text-sm mt-2 leading-tight">
-          {session.handle}
-        </p>
-        <p className="text-gray-400 text-xs mt-0.5">@{session.handle}</p>
-        <Link
-          href={`/${session.handle}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="
-            mt-2 text-[11px] text-indigo-500 hover:text-indigo-700
-            flex items-center gap-0.5 transition-colors duration-150
-          "
-          aria-label={`View public page for @${session.handle}`}
-        >
-          View Page
-          <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
-        </Link>
+      {/* Creator Profile Summary */}
+      <div className="flex items-center gap-3 p-4 mx-3 mt-3 rounded-2xl bg-white border border-black/[0.04] shadow-2xs">
+        <AvatarCircle handle={session.handle} size="sm" />
+        <div className="flex-1 min-w-0">
+          <p className="text-neutral-900 font-semibold text-xs truncate">
+            {session.handle}
+          </p>
+          <p className="text-neutral-400 text-[11px] font-mono truncate">
+            creatorlink.in/{session.handle}
+          </p>
+        </div>
       </div>
 
-      {/* Nav items */}
-      <nav className="flex-1 py-5 px-3 space-y-0.5" aria-label="Main navigation">
+      {/* Navigation Links */}
+      <nav className="flex-1 p-3 space-y-1" aria-label="Main navigation">
         {NAV_ITEMS.map((item) => {
           const active = isActive(item.href, pathname);
           return (
@@ -254,12 +208,12 @@ function Sidebar({ session, pathname }: { session: Session; pathname: string }) 
               key={item.href}
               href={item.href}
               className={`
-                flex items-center gap-3 px-3 py-2.5 rounded-xl
-                text-sm font-medium transition-all duration-150
+                flex items-center gap-3 px-3.5 py-2.5 rounded-xl
+                text-xs font-medium transition-all duration-150
                 ${
                   active
-                    ? "bg-indigo-50 text-indigo-700 font-semibold border-l-2 border-indigo-600 pl-2.5"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    ? "bg-white text-neutral-950 font-semibold shadow-xs border border-black/[0.06]"
+                    : "text-neutral-600 hover:bg-neutral-200/50 hover:text-neutral-900"
                 }
               `}
               aria-current={active ? "page" : undefined}
@@ -267,43 +221,35 @@ function Sidebar({ session, pathname }: { session: Session; pathname: string }) 
               <span className="text-base w-5 text-center" aria-hidden="true">
                 {item.icon}
               </span>
-              {item.label}
+              <span>{item.label}</span>
             </Link>
           );
         })}
       </nav>
 
-      {/* Bottom upgrade pill */}
-      <div className="p-4">
-        <div
-          className="
-            flex items-center justify-center gap-1.5
-            text-[11px] text-gray-400 font-medium
-            bg-gray-50 border border-gray-100
-            rounded-full py-2 px-3
-          "
-          aria-label="Pro features coming soon"
-        >
-          ✨ Pro Features Coming
+      {/* Subtle footer */}
+      <div className="p-4 text-center">
+        <div className="text-[11px] text-neutral-400 font-medium bg-neutral-100/80 rounded-full py-1.5 px-3 border border-neutral-200/50">
+          🇮🇳 India-First Creator Tool
         </div>
       </div>
     </aside>
   );
 }
 
-// ─── Bottom nav (mobile only) ─────────────────────────────────────────────────
+// ─── Bottom Navigation (Mobile with 44px touch targets) ───────────────────────
 
 function BottomNav({ pathname }: { pathname: string }) {
   return (
     <nav
       className="
-        md:hidden fixed bottom-0 left-0 right-0 z-50
-        bg-white border-t border-gray-100
+        md:hidden fixed bottom-0 left-0 right-0 z-40
+        bg-white/92 backdrop-blur-xl border-t border-black/[0.06]
         flex items-center justify-around
-        pb-safe pt-2
-        shadow-[0_-1px_12px_rgba(0,0,0,0.06)]
+        pt-1.5 pb-safe
+        shadow-lg
       "
-      style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
+      style={{ paddingBottom: "max(0.6rem, env(safe-area-inset-bottom))" }}
       aria-label="Mobile bottom navigation"
     >
       {NAV_ITEMS.map((item) => {
@@ -313,38 +259,31 @@ function BottomNav({ pathname }: { pathname: string }) {
             key={item.href}
             href={item.href}
             className="
-              flex flex-col items-center gap-0.5 flex-1
-              py-1 relative focus:outline-none
+              touch-target-44 flex flex-col items-center justify-center flex-1
+              py-1 relative
             "
             aria-current={active ? "page" : undefined}
             aria-label={item.label}
           >
-            {/* Active indicator dot above icon */}
+            {active && (
+              <span
+                className="absolute top-0.5 w-6 h-0.5 rounded-full bg-neutral-950"
+                aria-hidden="true"
+              />
+            )}
             <span
               className={`
-                absolute top-0 w-1 h-1 rounded-full
-                transition-all duration-300 ease-out
-                ${active ? "bg-indigo-500 opacity-100" : "opacity-0"}
-              `}
-              aria-hidden="true"
-            />
-
-            {/* Icon */}
-            <span
-              className={`
-                text-xl transition-transform duration-200
-                ${active ? "scale-110" : "scale-100"}
+                text-lg transition-transform duration-200
+                ${active ? "scale-105" : "scale-100 opacity-70"}
               `}
               aria-hidden="true"
             >
               {item.mobileIcon}
             </span>
-
-            {/* Label */}
             <span
               className={`
-                text-[10px] font-semibold transition-colors duration-150
-                ${active ? "text-indigo-600" : "text-gray-400"}
+                text-[10px] mt-0.5 font-medium transition-colors
+                ${active ? "text-neutral-950 font-semibold" : "text-neutral-400"}
               `}
             >
               {item.label}
@@ -356,37 +295,28 @@ function BottomNav({ pathname }: { pathname: string }) {
   );
 }
 
-// ─── Main shell ───────────────────────────────────────────────────────────────
+// ─── Main Shell Component ─────────────────────────────────────────────────────
 
 export default function DashboardShell({ session, children }: DashboardShellProps) {
   const pathname = usePathname();
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-gray-50/50 flex flex-col">
-      {/* Top bar */}
+    <div className="min-h-screen bg-[#fbfbfd] flex flex-col">
       <TopBar session={session} router={router} />
-
-      {/* Body: sidebar + content */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar — desktop */}
+      <div className="flex flex-1">
         <Sidebar session={session} pathname={pathname} />
-
-        {/* Main content area */}
         <main
           className="
             flex-1 overflow-y-auto
-            p-5 md:p-8
-            pb-24 md:pb-8
-            bg-gray-50/50
+            p-5 sm:p-8
+            pb-28 md:pb-12
           "
-          aria-label="Dashboard content"
+          aria-label="Dashboard workspace"
         >
           {children}
         </main>
       </div>
-
-      {/* Bottom nav — mobile */}
       <BottomNav pathname={pathname} />
     </div>
   );
