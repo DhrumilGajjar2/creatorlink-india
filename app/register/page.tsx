@@ -233,18 +233,18 @@ function RegisterForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          displayName: form.displayName.trim(),
-          handle:      form.handle.trim(),
-          bio:         form.bio.trim(),
-          email:       form.email.trim(),
-          password:    form.password,
+          name:     form.displayName.trim(),
+          handle:   form.handle.trim(),
+          bio:      form.bio.trim(),
+          email:    form.email.trim(),
+          password: form.password,
         }),
       });
 
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        setError(data?.message ?? "Registration failed. Please try again.");
+        setError(data?.error ?? data?.message ?? "Registration failed. Please try again.");
       } else {
         router.push("/dashboard");
       }

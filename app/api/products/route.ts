@@ -16,8 +16,11 @@ export async function POST(req: NextRequest) {
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { title, price, deliveryType } = await req.json();
-  if (!title || !price || !deliveryType) {
-    return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+  if (!title || price == null || !deliveryType) {
+    return NextResponse.json({ error: "Missing required fields: title, price, deliveryType" }, { status: 400 });
+  }
+  if (Number(price) < 1) {
+    return NextResponse.json({ error: "Price must be at least ₹1" }, { status: 400 });
   }
 
   const product = await createProduct({

@@ -139,7 +139,7 @@ function LoginForm() {
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        setError(data?.message ?? "Invalid email or password. Please try again.");
+        setError(data?.error ?? data?.message ?? "Invalid email or password. Please try again.");
       } else {
         router.push("/dashboard");
       }
